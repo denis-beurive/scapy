@@ -26,6 +26,18 @@ Test that scapy works:
 
 > Missing packages are printed when run start `scapy`.
 
+## Configure PyCharm
+
+Find the path to the Python interpreter used by Pipenv:
+
+    $  which python
+    /home/denis/.local/share/virtualenvs/scapy-0YGVbhtG/bin/python
+
+Under PyCharm: `File => Settings => Project => Python Interpreter` and set the
+Python interpreter used with Pipenv.
+
+> Find the path to the Scapy package: `python -c "import scapy; print(scapy.__file__)"`.
+
 # Initialise the Python environment
 
 Assuming that the file `Pipfile` already exists, you just need to execute:

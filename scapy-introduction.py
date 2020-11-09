@@ -1,55 +1,75 @@
-# This is a sample Python script.
-
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-from scapy.layers.inet import IP, UDP, TCP
+from scapy.layers.inet import IP, UDP, TCP, Ether
 from scapy.layers.vxlan import VXLAN
 from scapy.all import *
 
-# Build packets.
-p = IP() / VXLAN() / IP() / UDP()
-p.ttl = (10, 12)  # TTL from 10 to 12.
-p.dport = [80, 453]  # Destination port 80 and 453.
-for k in p:
-    print(p.sprintf("%IP.src% > %IP.dst%"))
-    raw(k)
+# Build 6 packets.
+packets: Packet = Ether() / IP() / VXLAN() / UDP()
+packets.ttl = (10, 12)  # TTL from 10 to 12.
+packets.dport = [80, 453]  # Destination port 80 and 453.
+print(f"Number of packets: {len(list(packets)):d}")
+packet: Packet
+for packet in packets:
+    print(packet.sprintf("%IP.src%:%IP.sport% > %IP.dst%:%IP.dport%"))
+    if TCP in packet:
+        print("This packet has a TCP packet")
+    if UDP in packet:
+        print("This packet has a UDP packet")
+print("")
 
-# Sniff packets...
-# Note: to make it work:
-#       xhost +
-#       Then log as "root": sudo su
-a = sniff(count=6)
-a.conversations()
-for p in a.sr():
-    print(p.show())
 
-# Get all sessions (from >> to).
-sessions: dict = a.sessions()
-for key in sessions.keys():
-    # The session (from >> to)
-    print(key)
-    # The list of packets within the current session.
-    print(sessions[key])
+# Print the description of the first packet.
+p: Packet = list(packets)[0]
+p.show()
 
-# Keep all packets in "a" that contain TCP.
-for k in a.filter(lambda p: TCP in p):
-    print(k)
+
+# Build packets: condensed notation
+# Build 1 packet
+packets: Packet = Ether(dst='01:02:03:04:05:06') /\
+                  IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
+                  TCP(sport=10, dport=20)
+list(packets)[0].show()
+
+# Build 2 packets
+packets: Packet = Ether(dst='01:02:03:04:05:06') /\
+                  IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
+                  TCP(sport=[10, 20], dport=20)
+list(packets)[0].show()
+list(packets)[1].show()
+
+
+# Load a PPACP file
+packets: PacketList = rdpcap('file.pcap')
+packet: Packet
+for packet in packets:
+    if IP in packet:
+        print(packet.sprintf("in PCAP %IP.src%:%IP.sport% > "
+                             "%IP.dst%:%IP.dport%"))
+print("")
+
+
+# Filter a list of packets. Keep all packets in "packets" that contain TCP.
+packet: Packet
+for packet in packets.filter(lambda p: UDP in p):
+    print(packet.sprintf("in PCAP UDP %IP.src%:%IP.sport% > "
+                         "%IP.dst%:%IP.dport%"))
+print("")
+
 
 # Keep all packets in "a" that contain TCP, and that have layers on top of TCP.
 # Have TCP: "TCP in p"
 # Have layers on top of TCP: "p[TCP].payload".
-for k in a.filter(lambda p: TCP in p and p[TCP].payload):
-    print(k)
-
-# Test if a layer has padding.
-p = IP() / TCP() / Padding(b"toto")
-print("p[TCP] has padding" if isinstance(p[TCP].payload, Padding) else "has no padding")
-
-p = IP() / TCP() / Raw(b"toto") / Padding(b"toto")
-print("p[TCP] has padding" if isinstance(p[TCP].payload, Padding) else "has no padding")
+packet: Packet
+for packet in packets.filter(lambda p: TCP in p and p[TCP].payload):
+    print(packet.sprintf("in PCAP TCP with payload %IP.src%:%IP.sport% > "
+                         "%IP.dst%:%IP.dport%"))
+print("")
 
 
-
-
+# Test if a layer has padding or not.
+p: Packet = IP() / TCP() / Padding(b"toto")
+print("\"p\" has padding" if isinstance(p[TCP].payload, Padding) else
+      "\"p\" has no padding")
+p: Packet = IP() / TCP() / Raw(b"toto") / Padding(b"toto")
+print("\"p\" has padding" if isinstance(p[TCP].payload, Padding) else
+      "\"p\" has no padding")
 

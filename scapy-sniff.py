@@ -1,5 +1,23 @@
 from scapy.all import *
 
+# Sniff packets...
+# Note: to make it work:
+#       xhost +
+#       Then log as "root": sudo su
+
+a = sniff(count=6)
+a.conversations()
+for p in a.sr():
+    print(p.show())
+
+# # Get all sessions (from >> to).
+sessions: dict = a.sessions()
+for key in sessions.keys():
+    # The session (from >> to)
+    print(key)
+    # The list of packets within the current session.
+    print(sessions[key])
+
 # Get 6 packets.
 sniff(count=6, filter="tcp")
 
