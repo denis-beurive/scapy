@@ -8,6 +8,13 @@
 
 ## Pipenv
 
+    # If you need to install pipenv:
+    pip install wheel
+    pip install setuptools
+    pip install --user pipenv
+
+> You may need to set the path to pipenv: `pip install --user pipenv`
+
     # Install Python3 locally.
     pipenv install --three
     # Activate the pipenv shell.
