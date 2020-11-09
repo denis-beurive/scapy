@@ -4,16 +4,17 @@
     sudo apt-get install tcpdump
     sudo apt install pipenv
 
-# Initialise the Python environment for the first time
+If you need to install `pipenv` **locally**:
 
-## Pipenv
-
-    # If you need to install pipenv:
     pip install wheel
     pip install setuptools
     pip install --user pipenv
 
 > You may need to set the path to pipenv: `pip install --user pipenv`
+
+# Initialise the Python environment for the first time
+
+## Pipenv
 
     # Install Python3 locally.
     pipenv install --three
