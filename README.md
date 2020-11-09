@@ -42,7 +42,7 @@ You need to be `root`.
 
 # Run the script
 
-    python main.c
+    python introduction.py
 
 > To generate network traffic, you can run `./generate-trafic.sh`.
 
