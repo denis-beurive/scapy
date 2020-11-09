@@ -17,7 +17,7 @@
 
 Install Python packages:
 
-    pipenv install matplotlib PyX cryptography>=1.7 GraphViz
+    pipenv install matplotlib PyX "cryptography>=1.7" GraphViz
     pipenv install git+https://github.com/secdev/scapy#egg=scapy
 
 Test that scapy works:
@@ -27,6 +27,8 @@ Test that scapy works:
 > Missing packages are printed when run start `scapy`.
 
 # Initialise the Python environment
+
+Assuming that the file `Pipfile` already exists, you just need to execute:
 
     pipenv install
 

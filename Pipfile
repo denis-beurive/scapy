@@ -1,18 +1,16 @@
 [[source]]
-url = "https://pypi.python.org/simple"
-verify_ssl = true
 name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
 
 [packages]
 matplotlib = "*"
 pyx = "*"
-cryptography = "*"
+cryptography = ">=1.7"
 graphviz = "*"
-
-[dev-packages]
+scapy = {git = "https://github.com/secdev/scapy"}
 
 [requires]
-python_version = "3.7"
-
-[packages.scapy]
-git = "https://github.com/secdev/scapy"
+python_version = "3.6"
