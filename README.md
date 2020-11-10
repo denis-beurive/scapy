@@ -10,7 +10,7 @@ If you need to install `pipenv` **locally**:
     pip install setuptools
     pip install --user pipenv
 
-> You may need to set the path to pipenv: `pip install --user pipenv`
+> You may need to set the path to `pipenv`. You may have to use `pip3` (instead of `pip`). 
 
 # Initialise the Python environment for the first time
 
