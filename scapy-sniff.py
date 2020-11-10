@@ -10,7 +10,7 @@ a.conversations()
 for p in a.sr():
     print(p.show())
 
-# # Get all sessions (from >> to).
+# Get all sessions (from >> to).
 sessions: dict = a.sessions()
 for key in sessions.keys():
     # The session (from >> to)

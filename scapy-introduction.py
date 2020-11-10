@@ -1,6 +1,7 @@
-from scapy.layers.inet import IP, UDP, TCP, Ether
+from scapy.layers.inet import IP, UDP, TCP, Ether, IPTools
 from scapy.layers.vxlan import VXLAN
 from scapy.all import *
+
 
 # Build 6 packets.
 packets: Packet = Ether() / IP() / VXLAN() / UDP()
@@ -24,15 +25,15 @@ p.show()
 
 # Build packets: condensed notation
 # Build 1 packet
-packets: Packet = Ether(dst='01:02:03:04:05:06') /\
-                  IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
-                  TCP(sport=10, dport=20)
+packets: Ether = Ether(dst='01:02:03:04:05:06') /\
+                 IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
+                 TCP(sport=10, dport=20)
 list(packets)[0].show()
 
 # Build 2 packets
-packets: Packet = Ether(dst='01:02:03:04:05:06') /\
-                  IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
-                  TCP(sport=[10, 20], dport=20)
+packets: Ether = Ether(dst='01:02:03:04:05:06') /\
+                 IP(id=1, ttl=15, src='192.0.0.1', dst='192.0.0.2') /\
+                 TCP(sport=[10, 20], dport=20)
 list(packets)[0].show()
 list(packets)[1].show()
 
@@ -66,10 +67,10 @@ print("")
 
 
 # Test if a layer has padding or not.
-p: Packet = IP() / TCP() / Padding(b"toto")
+p: IP = IP() / TCP() / Padding(b"toto")
 print("\"p\" has padding" if isinstance(p[TCP].payload, Padding) else
-      "\"p\" has no padding")
-p: Packet = IP() / TCP() / Raw(b"toto") / Padding(b"toto")
+      "\"p\" has no padding")  # => has padding
+p: IP = IP() / TCP() / Raw(b"toto") / Padding(b"toto")
 print("\"p\" has padding" if isinstance(p[TCP].payload, Padding) else
-      "\"p\" has no padding")
+      "\"p\" has no padding")  # => has no padding
 
