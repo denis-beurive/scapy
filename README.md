@@ -94,10 +94,11 @@ let's consider the file `scapy/layers/all.py`. You can see this code:
         except Exception as e:
             log.warning("can't import layer %s: %s", _l, e)
 
-You can see that the modules are _loaded/imported_ at runtime and that the names
-of the modules don't appear in the code. Therefore an IDE cannot reference the modules!
+You can see that the names of the modules don't appear in the code.
+Therefore an IDE cannot reference the modules!
 
-Thus, if you want to use Scapy with an IDE, you need to find out the modules for each symbol you want to insert into your script.
+Thus, if you want to use Scapy with an IDE, you need to find out the modules
+for each symbol you want to insert into your script.
 
 For example: You need to execute the function `arping`, and you want your IDE to know about it.
 
