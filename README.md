@@ -76,12 +76,29 @@ You need to be `root`.
 
 # Notes for using SCAPY within scripts
 
-Although all Python packages are fully handled by modern IDEs, this is not the case with SCAPY.
 The direction `from scapy.all import *` should allow IDEs to load all SCAPY symbols.
-This does not work. Why ? I've no idea. This is weird. I may look at it when I have spare time. 
+However, this does not work.
 
-Thus you need to find out the modules for each symbol you want to insert into
-your script.
+Why ?
+
+Because modules are imported **dynamically** (at runtime), not statically. For example,
+let's consider the file `scapy/layers/all.py`. You can see this code:
+
+    for _l in conf.load_layers:
+        log_loading.debug("Loading layer %s", _l)
+        try:
+            load_layer(_l, globals_dict=globals(), symb_list=__all__)
+        except Exception as e:
+            log.warning("can't import layer %s: %s", _l, e)
+
+You can see that the modules are _loaded/imported_ at runtime.
+
+* When the statement `from scapy.all import *` is encountered by a Python interpreted, the modules are imported
+(because the interpreter interprets the Python script).
+* But when the same statement is encountered by an IDE, the module are not loaded, because the IDE does not
+interpret the Python script. 
+
+Thus, if you want to use Scapy with an IDE, you need to find out the modules for each symbol you want to insert into your script.
 
 For example: You need to execute the function `arping`, and you want your IDE to know about it.
 
