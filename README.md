@@ -81,7 +81,7 @@ At least, that's what most developers expect. However, this does not work.
 
 Why ?
 
-Because imported modules are declared _statically_. Thus, IDEs, which only proceed to
+Because imported modules are *NOT* declared _statically_. Thus, IDEs, which only proceed to
 **static analysis** of code cannot reference the modules: _the modules names don't appear in the code.
 These names are generated at runtime_.
 
