@@ -63,4 +63,5 @@ while True:
             packet = sendp(Ether(payload), iface='eno1')
     finally:
         # Clean up the connection
+        print("An error occurred!")
         connection.close()
