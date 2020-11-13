@@ -74,6 +74,22 @@ You need to be `root`.
 
 > To generate network traffic, you can run `./generate-trafic.sh`.
 
+## Available scripts
+
+* [introduction](scapy-introduction.py)
+* [ARP cache poisoning](scapy-arp-cache-poisoning.py)
+* [wireshark](scapy-gen.py)
+* [sending packets](scapy-send.py)
+* [sniffing](scapy-sniff.py)
+* [using sockets](scapy-sockets.py)
+* [a tcp socket](scapy-tcp-server.py)
+* [a tcp client](scapy-tcp-client.py)
+
+## General notes
+
+* [linux commands](doc/admin.md)
+* [SCAPY protocols and classes](doc/scapy-net.md)
+
 # Notes for using SCAPY within scripts
 
 The direction `from scapy.all import *` should allow IDEs to load all SCAPY symbols.
