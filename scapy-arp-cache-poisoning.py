@@ -7,7 +7,7 @@
 #       Delete an entry in the ARP table: arp -d <IP address>
 
 from scapy.layers.inet import Ether
-from scapy.layers.l2 import ARP
+from scapy.layers.l2 import ARP, Dot1Q
 from scapy.all import *
 
 # Goal:
@@ -41,5 +41,33 @@ trame = Ether(
             pdst=DST_IP)
 
 trame.show()
+# open Wireshark in order to visualize the packet.
+wireshark(trame)
+rep = srp1(trame, iface='eno1')
+rep.show()
+
+# 802.1q encapsulation. The target is VLAN 2.
+# This trame will not "work".
+
+trame = Ether(
+    dst=DST_HW,
+    # Note: you don't have to modify the following MAC address (src=...).
+    #       However, if you do, then it will trigger a broadcast.
+    src=MY_FAKE_HW) /\
+        Dot1Q(vlan=2) /\
+        ARP(
+            # NOTE:
+            #  - If you specify op='is-at' (RESPONSE), then you may need to send the response multiple times.
+            #  - if you specify op='who-has' (REQUEST), then a single request does the job.
+            #    In this case, do not specify the destination hardware address (hwdst) (by default: 0 zeros).
+            op='is-at',
+            hwsrc=MY_FAKE_HW,
+            psrc=MY_FAKE_IP,
+            hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
+            pdst=DST_IP)
+
+trame.show()
+# open Wireshark in order to visualize the packet.
+wireshark(trame)
 rep = srp1(trame, iface='eno1')
 rep.show()
