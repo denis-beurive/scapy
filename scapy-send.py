@@ -1,3 +1,8 @@
+# Notes:
+#    - sendp(): send layer 2
+#    - sr(), sr1(): send layer 3
+
+
 from scapy.all import *
 from scapy.layers.inet import IP, ICMP, traceroute, TracerouteResult
 from scapy.layers.l2 import arping, ARPingResult, PacketList
