@@ -27,6 +27,7 @@ print(conf.iface)
 trame = Ether(
     dst=DST_HW,
     # Note: you don't have to modify the following MAC address (src=...).
+    #       However, if you do, then it will trigger a broadcast.
     src=MY_FAKE_HW) /\
         ARP(
             # NOTE:
