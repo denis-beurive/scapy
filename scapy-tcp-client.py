@@ -9,7 +9,7 @@ import socket
 
 
 # Run a client that sniffs the network.
-def run_client_sniff(hist='127.0.0.1', port=1234):
+def run_client_sniff(host='127.0.0.1', port=1234):
     sock = socket.socket()
     sock.connect((host, port))
     sniff(
