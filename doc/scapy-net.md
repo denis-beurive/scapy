@@ -1,3 +1,11 @@
+# General notes
+
+Get the list of all protocol classes implemented by SCAPY:
+
+    >>> ls()
+
+> To execute under the interactive interpreter.
+
 # Layer 2
 
 ## Ether
