@@ -7,6 +7,17 @@ import os
 
 import socket
 
+
+# Run a client that sniffs the network.
+def run_client_sniff(hist='127.0.0.1', port=1234):
+    sock = socket.socket()
+    sock.connect((host, port))
+    sniff(
+        store=False,
+        prn=lambda pkt: sock.sendall(struct.pack('>H', len(pkt)) + raw(pkt))
+    )
+
+
 HOST = '127.0.0.1'
 PORT = 10000
 SIZE = 128
