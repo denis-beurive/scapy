@@ -35,3 +35,12 @@
     169.254.0.0     0.0.0.0         255.255.0.0     U     1000   0        0 enp5s0
     192.168.1.0     0.0.0.0         255.255.255.0   U     100    0        0 enp5s0
 
+# ARP table
+
+Print the ARP table:
+
+    arp -na
+
+Delete an entry in the ARP table:
+
+    arp -d <IP address>

