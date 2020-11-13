@@ -1,4 +1,10 @@
 # This script illustrates the ARP cache poisoning attack.
+#
+# notes:
+#
+#       Get an entry in the ARP cache for a remote host, identified by its IP: ping <IP address>
+#       Get IP addresses and hardware addresses: arp -na
+#       Delete an entry in the ARP table: arp -d <IP address>
 
 from scapy.layers.inet import Ether
 from scapy.layers.l2 import ARP
@@ -30,7 +36,7 @@ trame = Ether(
             op='is-at',
             hwsrc=MY_FAKE_HW,
             psrc=MY_FAKE_IP,
-            hwdst=DST_HW,
+            hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
             pdst=DST_IP)
 
 trame.show()
