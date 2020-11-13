@@ -52,23 +52,23 @@ while True:
     try:
         print(f'Connection request')
         while True:
-            # Get the size.
+            # Get the size
             size = read_bytes_from_socket(connection, 2)
             if not size:
                 print("Client closed the connexion")
                 break
             print(f"data = {str(size):s}")
-            expected_payload_count = struct.unpack('>H', size)[0]
-            print(f"Get the length: {expected_payload_count:d}")
+            expected_payload_length = struct.unpack('>H', size)[0]
+            print(f"Get the length: {expected_payload_length:d}")
 
-            # Get the payload.
-            payload = read_bytes_from_socket(connection, expected_payload_count)
+            # Get the payload
+            payload = read_bytes_from_socket(connection, expected_payload_length)
             if not payload:
                 print("Client closed the connexion")
                 break
 
             # Send the data to the network
-            print(f"Send {expected_payload_count:d} bytes")
+            print(f"Send {expected_payload_length:d} bytes")
             print(f"{str(payload):s}")
             packet = sendp(Ether(payload), iface='eno1')
     finally:
