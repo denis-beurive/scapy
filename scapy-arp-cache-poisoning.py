@@ -26,6 +26,7 @@ trame = Ether(
             # NOTE:
             #  - If you specify op='is-at' (RESPONSE), then you may need to send the response multiple times.
             #  - if you specify op='who-has' (REQUEST), then a single request does the job.
+            #    In this case, do not specify the destination hardware address (hwdst) (by default: 0 zeros).
             op='is-at',
             hwsrc=MY_FAKE_HW,
             psrc=MY_FAKE_IP,
