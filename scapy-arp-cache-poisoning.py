@@ -14,8 +14,8 @@ trame = Ether(
     src='00:01:02:03:04:31') /\
         ARP(
             # NOTE:
-            #  - If you specify op='is-at', then you may need to send the response multiple times.
-            #  - if you specify op='who-has', then a single request does the job.
+            #  - If you specify op='is-at' (RESPONSE), then you may need to send the response multiple times.
+            #  - if you specify op='who-has' (REQUEST), then a single request does the job.
             op='is-at',
             hwsrc='00:01:02:03:04:31',
             psrc='10.0.4.139',
