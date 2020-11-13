@@ -91,7 +91,7 @@ print(f"Number of packets: {len(list(packets)):d}\n")  # => 5 packets
 # Selection within a list of packets
 # ----------------------------------------------------------------
 
-# Create 2 packets.
+# Create 2 packets. Packet implicite.
 packets: Ether = Ether(dst='01:02:03:04:05:06') /\
                  IP(id=1,
                     ttl=15,
@@ -101,19 +101,16 @@ packets: Ether = Ether(dst='01:02:03:04:05:06') /\
 print(f"Number of packets: {len(list(packets)):d}\n")  # => 5 packets
 
 # Select the second packet that has a TCP packet.
-packetList = PacketList(packets)
-# packetList.show()
+packe_lList = PacketList(packets)
+packe_lList.show()
 p: Ether
-for p in packetList:
+for p in packe_lList:
     print(p.sprintf("TCP %IP.src%:%IP.sport% > "
                     "%IP.dst%:%IP.dport%"))
     print("has TCP" if TCP in p else "no TCP")
 
-
-# QUESTION: pourquoi le resultat de la filtration est-il vide ???
-for p in packetList.filter(lambda p: TCP in p):
-    p.summary()
-
+for p in packe_lList.filter(lambda p: TCP in p):
+    print(p.summary())
 
 # ----------------------------------------------------------------
 # Load a PCAP file

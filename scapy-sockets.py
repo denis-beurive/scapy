@@ -3,6 +3,8 @@ from scapy.layers.inet import IP, TCP, UDP
 from scapy.volatile import RandShort
 from scapy.packet import Raw
 
+
+
 try:
     s = socket(AF_INET, SOCK_STREAM)
     p = IP(dst="192.168.1.254") / \
@@ -22,3 +24,4 @@ try:
     s.sendto(bytes(p), ("192.168.1.254", 80))
 except Exception as e:
     raise e
+

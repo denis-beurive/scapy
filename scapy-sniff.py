@@ -1,3 +1,4 @@
+from scapy.layers.inet import TCP
 from scapy.all import *
 
 # Sniff packets...
@@ -19,7 +20,12 @@ for key in sessions.keys():
     print(sessions[key])
 
 # Get 6 packets.
-sniff(count=6, filter="tcp")
+x = sniff(count=6, filter="tcp")  # filter BPF (used by the kernel)
+x.filter(lambda p: TCP not in p)
+
+# <=>
+sniff(count=6, lfilter=lambda p: TCP not in p)
+
 
 # Execute a function on the fly and print a summary for each packet.
 #    - store: (0|1) store packets or not.
