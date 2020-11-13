@@ -2,9 +2,7 @@
 #    - sendp(): send layer 2
 #    - sr(), sr1(): send layer 3
 
-from scapy.layers.inet import Ether, IP, UDP, TCP, ICMP
-from scapy.layers.vxlan import VXLAN
-from scapy.layers.l2 import ARP, Dot1Q
+from scapy.layers.inet import Ether, IP
 from scapy.all import *
 
 MY_ID = 0x272a
@@ -66,9 +64,5 @@ if False:
     packet.add_payload(b"Denis BEURIVE")
     packet.show()
     sendp(packet, iface='eno1')
-
-
-
-
 
 
