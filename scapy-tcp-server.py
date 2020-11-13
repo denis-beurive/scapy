@@ -1,3 +1,13 @@
+# Implement a TCP server.
+# Please note that this script must be executed as "root" (because we use the function "sendp()").
+#
+# Under Debian 10:
+#       xhost +
+#       sudo su
+# And, eventually (if you use pipenv):
+#       pipenv shell
+
+
 from scapy.layers.inet import Ether
 from scapy.all import *
 
